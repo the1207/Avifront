@@ -1,0 +1,49 @@
+<aside
+  class="fixed start-0 top-0 z-50 flex h-screen flex-col border-e border-gray-200 bg-white px-4 text-gray-900 transition-all duration-300 ease-in-out dark:border-gray-800 dark:bg-gray-900 xl:translate-x-0"
+  [ngClass]="{
+    'w-[270px]': (isExpanded$ | async) || (isMobileOpen$ | async) || (isHovered$ | async),
+    'w-[76px]': !((isExpanded$ | async) || (isMobileOpen$ | async) || (isHovered$ | async)),
+    'translate-x-0': isMobileOpen$ | async,
+    'max-xl:-translate-x-full max-xl:rtl:translate-x-full': !(isMobileOpen$ | async)
+  }"
+  (mouseenter)="onSidebarMouseEnter()"
+  (mouseleave)="sidebarService.setHovered(false)"
+>
+  <div class="flex h-20 shrink-0 items-center" [ngClass]="{ 'justify-center': !((isExpanded$ | async) || (isHovered$ | async)), 'justify-start': (isExpanded$ | async) || (isHovered$ | async) }">
+    <a routerLink="/" class="font-semibold text-gray-900 dark:text-white/90" aria-label="Aviform - Accueil">
+      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+        <span class="text-lg">Aviform</span>
+      } @else {
+        <span class="text-sm" title="Aviform">AV</span>
+      }
+    </a>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto pb-6" aria-label="Navigation principale">
+    @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+      <h2 class="mb-3 px-3 text-xs font-semibold uppercase text-gray-400">Menu</h2>
+    }
+    <ul class="flex flex-col gap-1">
+      @for (item of navItems; track item.path) {
+        <li>
+          <a
+            [routerLink]="item.path"
+            [attr.title]="item.name"
+            [attr.aria-current]="isActive(item.path) ? 'page' : null"
+            (click)="fermerMobile()"
+            class="flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+            [ngClass]="isActive(item.path)
+              ? 'bg-brand-50 text-brand-700 dark:bg-brand-500/15 dark:text-brand-300'
+              : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-white'"
+          >
+            @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+              <span class="truncate">{{ item.name }}</span>
+            } @else {
+              <span class="mx-auto text-xs font-semibold">{{ item.name.slice(0, 1) }}</span>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+</aside>

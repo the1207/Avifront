@@ -1,0 +1,63 @@
+<div class="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+  <div>
+    <div class="mb-5 sm:mb-8">
+      <h1 class="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
+        Connexion
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Saisis tes identifiants pour accéder à Aviform.
+      </p>
+    </div>
+
+    @if (erreur()) {
+      <p role="alert" class="mb-5 rounded-lg bg-error-50 px-4 py-3 text-sm text-error-600 dark:bg-error-500/15 dark:text-error-500">
+        {{ erreur() }}
+      </p>
+    }
+
+    <form (ngSubmit)="onSignIn()" class="space-y-6">
+      <div>
+        <app-label>Adresse e-mail ou identifiant <span class="text-error-500">*</span></app-label>
+        <app-input-field
+          type="text"
+          inputMode="email"
+          placeholder="nom@domaine.fr ou admin1"
+          [value]="email"
+          (valueChange)="email = $event.toString()"
+          name="email"
+          class="form-input"
+          required
+        />
+      </div>
+
+      <div>
+          <app-label>Mot de passe <span class="text-error-500">*</span></app-label>
+        <div class="relative">
+          <app-input-field
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Saisis ton mot de passe"
+            [value]="password"
+            (valueChange)="password = $event.toString()"
+            name="password"
+            class="form-input"
+            className="ltr:pr-11 rtl:pl-11"
+            required
+          />
+          <button
+            type="button"
+            [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+            (click)="showPassword = !showPassword"
+            class="absolute z-30 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 end-4 top-1/2"
+          >
+            {{ showPassword ? 'Masquer' : 'Afficher' }}
+          </button>
+        </div>
+      </div>
+
+      <app-button type="submit" [disabled]="chargement()" className="w-full" size="sm">
+        {{ chargement() ? 'Connexion...' : 'Se connecter' }}
+      </app-button>
+    </form>
+  </div>
+</div>
+

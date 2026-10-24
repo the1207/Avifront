@@ -1,0 +1,15 @@
+<div class="relative z-1 min-h-screen bg-white p-6 dark:bg-gray-900 sm:p-0">
+  <div class="relative flex min-h-screen w-full flex-col justify-center dark:bg-gray-900 sm:p-0 lg:flex-row">
+    <ng-content></ng-content>
+    <div class="relative hidden w-full items-center justify-center bg-brand-950 dark:bg-white/5 lg:grid lg:w-1/2">
+      <app-grid-shape />
+      <div class="z-1 flex max-w-sm flex-col items-center px-8 text-center">
+        <a routerLink="/signin" class="mb-4 text-3xl font-semibold text-white">Aviform</a>
+        <p class="text-sm text-gray-300">Gestion nutritionnelle et formulation animale</p>
+      </div>
+    </div>
+    <div class="fixed bottom-6 end-6 z-50 hidden sm:block">
+      <app-theme-toggle-two />
+    </div>
+  </div>
+</div>
